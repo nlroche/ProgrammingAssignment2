@@ -25,15 +25,15 @@
 ##  3. an object containing getter and setter functions to access or change the above two items.
 
 makeCacheMatrix <- function(x = matrix()) {
-   m <- NULL
-   set <- function(y) {
-      x <<- y           #super assignment of matrix object y to x in its enclosing envonment
-      m <<- NULL        #super assignment of NULL inverse matrix object to m in its enclosing envonment
+   m <- NULL             #create empty placeholder for the inverse matrix
+   set <- function(y) {  #function to save the matrix and clear the saved inverse
+      x <<- y             #super assignment of matrix object y to x in its enclosing environment
+      m <<- NULL          #super assignment of NULL inverse matrix object to m in its enclosing environment
    }
-   get <- function() x
-   setinverse <- function(inverse) m <<- inverse
-   getinverse <- function() m
-   list(set = set, get = get,
+   get <- function() x               #function to return the matrix
+   setinverse <- function(inverse) m <<- inverse  #function to save the inverse to enclosing environment
+   getinverse <- function() m        #function to return the inverse matrix
+   list(set = set, get = get,        #return a list containing the getters and setters
         setinverse = setinverse,
         getinverse = getinverse)
 }
@@ -46,12 +46,12 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
 
    m <- x$getinverse()
-   if(!is.null(m)) {
-      message("getting cached data")
-      return(m)
+   if(!is.null(m)) {                   #If there is no cached inverse matrix,
+      message("getting cached data")   #(1) print this message and
+      return(m)                        #(2) return the cached inverse matrix and (3) exit the function.
    }
-   data <- x$get()
-   m <- solve(data, ...)
-   x$setinverse(m)
+   data <- x$get()                     #Otherwise (1) get the matrix,
+   m <- solve(data, ...)               #(2) calculate its inverse using solve()
+   x$setinverse(m)                     #(3) and save to cache.
    m
 }
