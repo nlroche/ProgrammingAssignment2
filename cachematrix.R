@@ -1,5 +1,7 @@
 ## Steps to test:
-## 1. Run all of the below code.
+##
+## 1. First run the two functions makeCacheMatrix and cacheSolve. See below.
+##    Then run steps 2-6 one at a time at the command line.
 ## 2. Create a matrix A:
 ##       A <- matrix(c(4,2,7,6),2,2)
 ## 3. Create an object that stores the matrix, a null inverse, and setters/getters
